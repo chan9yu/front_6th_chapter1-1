@@ -104,7 +104,7 @@
     <div class="max-w-md mx-auto py-8 text-center text-gray-500">
       <p>© 2025 항해플러스 프론트엔드 쇼핑몰</p>
     </div>
-  </footer>`}function b(e){let{leftContent:t}=e;return`<header class="bg-white shadow-sm sticky top-0 z-40">
+  </footer>`}function b(e){let{leftContent:t,cartItemCount:n}=e;return`<header class="bg-white shadow-sm sticky top-0 z-40">
     <div class="max-w-md mx-auto px-4 py-4">
       <div class="flex items-center justify-between">
         ${t}
@@ -112,6 +112,11 @@
           <!-- 장바구니 아이콘 -->
           <button id="cart-icon-btn" class="relative p-2 text-gray-700 hover:text-gray-900 transition-colors">
             ${h({className:`w-6 h-6 pointer-events-none`})}
+            ${n>0?`<span
+                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                >
+                  ${n}
+                </span>`:``}
           </button>
         </div>
       </div>
@@ -170,11 +175,11 @@
       </svg>
       <span class="text-sm text-gray-600">상품을 불러오는 중...</span>
     </div>
-  </div>`}function w(e,t){let n=0;return function(...r){let i=Date.now();i-n>=t&&(n=i,e.apply(this,r))}}var T=class{constructor({container:e=window,threshold:t=100,onLoad:n}){this.container=e,this.threshold=t,this.onLoad=n,this.handleScroll=w(this.#onScroll.bind(this),100)}init(){this.container.addEventListener(`scroll`,this.handleScroll)}destroy(){this.container.removeEventListener(`scroll`,this.handleScroll)}#onScroll(){let e=this.#getScrollTop(),t=this.#getViewHeight(),n=this.#getScrollHeight();e+t+this.threshold>=n&&this.onLoad()}#getScrollTop(){return this.container===window?window.scrollY||document.documentElement.scrollTop:this.container instanceof Element?this.container.scrollTop:0}#getViewHeight(){return this.container===window?window.innerHeight:this.container.clientHeight}#getScrollHeight(){return this.container===window?document.documentElement.scrollHeight:this.container.scrollHeight}};function E(e){let t=new URL(window.location);Object.entries(e).forEach(([e,n])=>{n&&n!==``?t.searchParams.set(e,n):t.searchParams.delete(e)}),window.history.replaceState(null,``,t.toString())}var D=class extends o{constructor(e){super(e);let t=new URLSearchParams(window.location.search);this.state={loading:!0,products:[],pagination:{limit:parseInt(t.get(`limit`))||20},filters:{search:t.get(`search`)||``,sort:t.get(`sort`)||``},categories:{},isOpenCartModal:!1};let n=new T({threshold:200,onLoad:()=>{let e=this.state.pagination.page,t=e+1;this.#loadMoreProducts({page:t})}});this.on(o.EVENTS.MOUNT,()=>{n.init(),this.#loadInitialData()}),this.on(o.EVENTS.UPDATE,()=>{this.state.pagination.hasNext||n.destroy()})}async#loadInitialData(){try{let[e,t]=await Promise.all([f({page:1,limit:this.state.pagination.limit??20,search:this.state.filters.search??``,category1:this.state.filters.category1??``,category2:this.state.filters.category2??``,sort:this.state.filters.sort??`price_asc`}),m()]);this.setState({...e,categories:t,loading:!1})}catch(e){e instanceof Error&&(console.error(`상품 및 카테고리 리스트 로딩 실패:`,e.message),this.setState({loading:!1,categories:{}}))}}async#loadMoreProducts(e){let{page:t}=e;try{let e=await f({page:t});this.setState({products:[...this.state.products,...e.products],pagination:{...this.state.pagination,page:t}}),E({current:t})}catch(e){e instanceof Error&&console.error(`상품 추가로 더 불러오기 실패:`,e.message)}}async#reloadProducts(e){try{let t=await f({...this.state.filters,...this.state.pagination,...e});this.setState({...t}),E(e)}catch(e){e instanceof Error&&console.error(`상품 리로드 실패:`,e.message)}}async#handleLimitChange(e){e=parseInt(e),await this.#reloadProducts({limit:e})}async#handleSortChange(e){await this.#reloadProducts({sort:e})}async#handleSearchChange(e){await this.#reloadProducts({search:e})}bindEvents(e){e.addEventListener(`click`,e=>{let t=e.target.dataset.route;if(t&&this.props.router.navigate(t),e.target.classList.contains(`cart-modal-overlay`)){this.setState({isOpenCartModal:!1});return}switch(e.target.id){case`cart-icon-btn`:this.setState({isOpenCartModal:!0});break;case`cart-modal-close-btn`:this.setState({isOpenCartModal:!1});break}}),e.addEventListener(`change`,e=>{switch(e.target.id){case`limit-select`:this.#handleLimitChange(e.target.value);break;case`sort-select`:this.#handleSortChange(e.target.value);break}}),e.addEventListener(`keypress`,e=>{switch(e.target.id){case`search-input`:if(e.key===`Enter`){let t=e.target.value.trim();this.#handleSearchChange(t)}break}}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&this.state.isOpenCartModal&&this.setState({isOpenCartModal:!1})})}render(){return` //
+  </div>`}function w(e,t){let n=0;return function(...r){let i=Date.now();i-n>=t&&(n=i,e.apply(this,r))}}var T=class{constructor({container:e=window,threshold:t=100,onLoad:n}){this.container=e,this.threshold=t,this.onLoad=n,this.handleScroll=w(this.#onScroll.bind(this),100)}init(){this.container.addEventListener(`scroll`,this.handleScroll)}destroy(){this.container.removeEventListener(`scroll`,this.handleScroll)}#onScroll(){let e=this.#getScrollTop(),t=this.#getViewHeight(),n=this.#getScrollHeight();e+t+this.threshold>=n&&this.onLoad()}#getScrollTop(){return this.container===window?window.scrollY||document.documentElement.scrollTop:this.container instanceof Element?this.container.scrollTop:0}#getViewHeight(){return this.container===window?window.innerHeight:this.container.clientHeight}#getScrollHeight(){return this.container===window?document.documentElement.scrollHeight:this.container.scrollHeight}};const E=Object.freeze({LOCAL_STORAGE:`localStorage`,SESSION_STORAGE:`sessionStorage`});var D=class e{static TYPES=E;constructor(t=e.TYPES.LOCAL_STORAGE){this.storage=t===e.TYPES.SESSION_STORAGE?sessionStorage:localStorage,this.prefix=``}get size(){return this.keys().length}get isEmpty(){return this.size()===0}setPrefix(e){this.prefix=e}get(e){try{let t=this.storage.getItem(this.#getKey(e));return t?JSON.parse(t).value:null}catch(e){return console.error(`Storage get error:`,e),null}}set(e,t){try{let n={value:t,timestamp:Date.now()};return this.storage.setItem(this.#getKey(e),JSON.stringify(n)),!0}catch(e){return console.error(`Storage set error:`,e),!1}}push(e,t){try{let n=this.get(e),r=[];return n!==null&&(Array.isArray(n)?r=n:(console.warn(`Key '${e}' exists but is not an array. Converting to array.`),r=[n])),r.push(t),this.set(e,r)}catch(e){return console.error(`Storage push error:`,e),!1}}pushAll(e,t){try{if(!Array.isArray(t))return console.error(`Items must be an array`),!1;let n=this.get(e),r=[];return n!==null&&(Array.isArray(n)?r=n:(console.warn(`Key '${e}' exists but is not an array. Converting to array.`),r=[n])),r.push(...t),this.set(e,r)}catch(e){return console.error(`Storage pushAll error:`,e),!1}}removeFromArray(e,t){try{let n=this.get(e);if(n===null||!Array.isArray(n))return console.warn(`Key '${e}' does not exist or is not an array.`),!1;let r=n.filter(e=>!t(e));return this.set(e,r)}catch(e){return console.error(`Storage removeFromArray error:`,e),!1}}removeById(e,t){return this.removeFromArray(e,e=>e.id===t)}updateInArray(e,t,n){try{let r=this.get(e);if(r===null||!Array.isArray(r))return console.warn(`Key '${e}' does not exist or is not an array.`),!1;let i=r.map(e=>t(e)?typeof n==`function`?n(e):{...e,...n}:e);return this.set(e,i)}catch(e){return console.error(`Storage updateInArray error:`,e),!1}}updateById(e,t,n){return this.updateInArray(e,e=>e.id===t,n)}has(e){return this.get(e)!==null}remove(e){try{return this.storage.removeItem(this.#getKey(e)),!0}catch(e){return console.error(`Storage remove error:`,e),!1}}clear(){try{let e=0,t=Object.keys(this.storage);for(let n of t)this.prefix?n.startsWith(`${this.prefix}:`)&&(this.storage.removeItem(n),e++):(this.storage.removeItem(n),e++);return e}catch(e){return console.error(`Storage clear error:`,e),0}}keys(){try{let e=Object.keys(this.storage);return this.prefix?e.filter(e=>e.startsWith(`${this.prefix}:`)).map(e=>e.replace(`${this.prefix}:`,``)):e}catch(e){return console.error(`Storage keys error:`,e),[]}}info(){return{type:this.storage===localStorage?`localStorage`:`sessionStorage`,prefix:this.prefix,size:this.size,isEmpty:this.isEmpty,keys:this.keys()}}#getKey(e){return this.prefix?`${this.prefix}:${e}`:e}},O=class e{static#instance=null;constructor(){if(e.#instance)return e.#instance;this.cartStorage=new D(D.TYPES.LOCAL_STORAGE),this.cartStorage.setPrefix(`cart`),e.#instance=this}get items(){return this.cartStorage.get(`items`)||[]}get totalCount(){return this.items.reduce((e,t)=>e+t.quantity,0)}get itemCount(){return this.items.length}static getInstance(){return e.#instance||=new e,e.#instance}addItem(e,t=1){let n=this.cartStorage.get(`items`)||[],r=n.findIndex(t=>t.id===e.id);return r===-1?n.push({...e,quantity:t}):n[r].quantity+=t,this.cartStorage.set(`items`,n)}removeItem(e){let t=this.cartStorage.get(`items`)||[],n=t.filter(t=>t.productId!==e);return this.cartStorage.set(`items`,n)}updateItemCount(e,t){let n=this.cartStorage.get(`items`)||[],r=n.findIndex(t=>t.productId===e);return r===-1?!1:(n[r].count=t,this.cartStorage.set(`items`,n))}};const k=O.getInstance;function A(e){let t=new URL(window.location);Object.entries(e).forEach(([e,n])=>{n&&n!==``?t.searchParams.set(e,n):t.searchParams.delete(e)}),window.history.replaceState(null,``,t.toString())}var j=class extends o{constructor(e){super(e);let t=new URLSearchParams(window.location.search);this.state={loading:!0,products:[],pagination:{limit:parseInt(t.get(`limit`))||20},filters:{search:t.get(`search`)||``,sort:t.get(`sort`)||``},categories:{},isOpenCartModal:!1},this.cartService=k();let n=new T({threshold:200,onLoad:()=>{let e=this.state.pagination.page,t=e+1;this.#loadMoreProducts({page:t})}});this.on(o.EVENTS.MOUNT,()=>{n.init(),this.#loadInitialData()}),this.on(o.EVENTS.UPDATE,()=>{this.state.pagination.hasNext||n.destroy()})}async#loadInitialData(){try{let[e,t]=await Promise.all([f({page:1,limit:this.state.pagination.limit??20,search:this.state.filters.search??``,category1:this.state.filters.category1??``,category2:this.state.filters.category2??``,sort:this.state.filters.sort??`price_asc`}),m()]);this.setState({...e,categories:t,loading:!1})}catch(e){e instanceof Error&&(console.error(`상품 및 카테고리 리스트 로딩 실패:`,e.message),this.setState({loading:!1,categories:{}}))}}async#loadMoreProducts(e){let{page:t}=e;try{let e=await f({page:t});this.setState({products:[...this.state.products,...e.products],pagination:{...this.state.pagination,page:t}}),A({current:t})}catch(e){e instanceof Error&&console.error(`상품 추가로 더 불러오기 실패:`,e.message)}}async#reloadProducts(e){try{let t=await f({...this.state.filters,...this.state.pagination,...e});this.setState({...t}),A(e)}catch(e){e instanceof Error&&console.error(`상품 리로드 실패:`,e.message)}}async#handleLimitChange(e){e=parseInt(e),await this.#reloadProducts({limit:e})}async#handleSortChange(e){await this.#reloadProducts({sort:e})}async#handleSearchChange(e){await this.#reloadProducts({search:e})}bindEvents(e){e.addEventListener(`click`,e=>{let t=e.target.closest(`[data-route]`);if(t){let e=t.dataset.route;this.props.router.navigate(e);return}if(e.target.classList.contains(`cart-modal-overlay`)){this.setState({isOpenCartModal:!1});return}if(e.target.classList.contains(`add-to-cart-btn`)){let t=e.target.dataset.productId,n=this.state.products.find(e=>e.productId===t);this.cartService.addItem({id:t,image:n.image,price:n.lprice,selected:!1,title:n.title}),this.setState({cartItemCount:this.cartService.itemCount});return}switch(e.target.id){case`cart-icon-btn`:this.setState({isOpenCartModal:!0});break;case`cart-modal-close-btn`:this.setState({isOpenCartModal:!1});break}}),e.addEventListener(`change`,e=>{switch(e.target.id){case`limit-select`:this.#handleLimitChange(e.target.value);break;case`sort-select`:this.#handleSortChange(e.target.value);break}}),e.addEventListener(`keypress`,e=>{switch(e.target.id){case`search-input`:if(e.key===`Enter`){let t=e.target.value.trim();this.#handleSearchChange(t)}break}}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&this.state.isOpenCartModal&&this.setState({isOpenCartModal:!1})})}render(){return` //
       <div class="min-h-screen bg-gray-50">
         ${b({leftContent:`<h1 class="text-xl font-bold text-gray-900">
             ${u({path:`/`,text:`쇼핑몰`})}
-          </h1>`})}
+          </h1>`,cartItemCount:this.state.cartItemCount})}
 
         <main class="max-w-md mx-auto px-4 py-4">
           <!-- 검색 및 필터 -->
@@ -270,16 +275,16 @@
 
         <!-- 하단 푸터 -->
         ${y()}
-      </div>`}};function O(){return`<svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      </div>`}};function M(){return`<svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-  </svg>`}function k(){return`<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  </svg>`}function N(){return`<svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-  </svg>`}function A(){return`<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  </svg>`}function P(){return`<svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-  </svg>`}function j(){return`<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  </svg>`}function F(){return`<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-  </svg>`}function M(e){let{category1:t,category2:n,category3:r,category4:i}=e,a=[t,n,r,i],o=a.filter(e=>e&&e.trim()!==``).map((e,t)=>`
-        ${j()}
+  </svg>`}function I(e){let{category1:t,category2:n,category3:r,category4:i}=e,a=[t,n,r,i],o=a.filter(e=>e&&e.trim()!==``).map((e,t)=>`
+        ${F()}
         <button class="breadcrumb-link" data-category${t+1}="${e}">${e}</button>
       `).join(``);return`
     <nav class="mb-4">
@@ -288,15 +293,15 @@
         ${o}
       </div>
     </nav>
-  `}function N(){return`<svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+  `}function L(){return`<svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
     <path
       d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
     ></path>
-  </svg>`}function P(){return`<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+  </svg>`}function R(){return`<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
     <path
       d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
     ></path>
-  </svg>`}function F(e){let t=Array.from({length:e},P).join(``),n=Array.from({length:5-e},N).join(``);return`<div class="flex items-center">${t}${n}</div>`}function I(e){let{title:t,image:n,lprice:r,description:i,rating:a,reviewCount:o,stock:s}=e;return`
+  </svg>`}function z(e){let t=Array.from({length:e},R).join(``),n=Array.from({length:5-e},L).join(``);return`<div class="flex items-center">${t}${n}</div>`}function B(e){let{title:t,image:n,lprice:r,description:i,rating:a,reviewCount:o,stock:s,brand:c}=e,l=Number(r).toLocaleString(`ko-KR`)+`원`;return`
     <!-- 상품 이미지 -->
     <div class="p-4">
       <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden mb-4">
@@ -304,18 +309,18 @@
       </div>
       <!-- 상품 정보 -->
       <div>
-        <p class="text-sm text-gray-600 mb-1"></p>
+        <p class="text-sm text-gray-600 mb-1">${c}</p>
         <h1 class="text-xl font-bold text-gray-900 mb-3">${t}</h1>
 
         <!-- 평점 및 리뷰 -->
         <div class="flex items-center mb-3">
-          <div class="flex items-center">${F(a)}</div>
+          <div class="flex items-center">${z(a)}</div>
           <span class="ml-2 text-sm text-gray-600">${a.toFixed(1)} (${o}개 리뷰)</span>
         </div>
 
         <!-- 가격 -->
         <div class="mb-4">
-          <span class="text-2xl font-bold text-blue-600">${r}원</span>
+          <span class="text-2xl font-bold text-blue-600">${l}</span>
         </div>
 
         <!-- 재고 -->
@@ -325,27 +330,27 @@
         <div class="text-sm text-gray-700 leading-relaxed mb-6">${i}</div>
       </div>
     </div>
-  `}function L(){return`<div class="py-20 bg-gray-50 flex items-center justify-center">
+  `}function V(){return`<div class="py-20 bg-gray-50 flex items-center justify-center">
     <div class="text-center">
       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
       <p class="text-gray-600">상품 정보를 불러오는 중...</p>
     </div>
-  </div>`}var R=class extends o{constructor(e){super(e),this.state={loading:!0,product:{},isOpenCartModal:!1},this.on(o.EVENTS.MOUNT,()=>{let{productId:e}=this.props.router.routeParams;this.#loadProduct(e)})}async#loadProduct(e){try{let t=await p(e);this.setState({product:t,loading:!1})}catch(e){e instanceof Error&&(console.error(`상품 로딩 실패:`,e.message),this.setState({loading:!1}))}}bindEvents(e){e.addEventListener(`click`,e=>{let t=e.target.dataset.route;if(t&&this.props.router.navigate(t),e.target.classList.contains(`cart-modal-overlay`)){this.setState({isOpenCartModal:!1});return}switch(e.target.id){case`cart-icon-btn`:this.setState({isOpenCartModal:!0});break;case`cart-modal-close-btn`:this.setState({isOpenCartModal:!1});break}}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&this.state.isOpenCartModal&&this.setState({isOpenCartModal:!1})})}render(){return`
+  </div>`}var H=class extends o{constructor(e){super(e),this.state={loading:!0,product:{},isOpenCartModal:!1},this.on(o.EVENTS.MOUNT,()=>{let{productId:e}=this.props.router.routeParams;this.#loadProduct(e)})}async#loadProduct(e){try{let t=await p(e);this.setState({product:t,loading:!1})}catch(e){e instanceof Error&&(console.error(`상품 로딩 실패:`,e.message),this.setState({loading:!1}))}}bindEvents(e){e.addEventListener(`click`,e=>{let t=e.target.closest(`[data-route]`);if(t){let e=t.dataset.route;this.props.router.navigate(e);return}if(e.target.classList.contains(`cart-modal-overlay`)){this.setState({isOpenCartModal:!1});return}switch(e.target.id){case`cart-icon-btn`:this.setState({isOpenCartModal:!0});break;case`cart-modal-close-btn`:this.setState({isOpenCartModal:!1});break;case`quantity-decrease`:case`quantity-increase`:{let t=document.getElementById(`quantity-input`);if(!t)break;let n=Number(t.value),r=e.target.id===`quantity-increase`?1:-1,i=n+r,a=Number(t.min)||1,o=Number(t.max)||1/0;t.value=Math.max(a,Math.min(o,i));break}}}),document.addEventListener(`keydown`,e=>{e.key===`Escape`&&this.state.isOpenCartModal&&this.setState({isOpenCartModal:!1})})}render(){return`
       <div class="min-h-screen bg-gray-50">
         ${b({leftContent:`<div class="flex items-center space-x-3">
             <button data-route="/" class="p-2 text-gray-700 hover:text-gray-900 transition-colors">
-              ${O()}
+              ${M()}
             </button>
             <h1 class="text-lg font-bold text-gray-900">상품 상세</h1>
           </div>`})}
 
         <main class="max-w-md mx-auto px-4 py-4">
-          ${this.state.loading?L():` <!-- 브레드크럼 -->
-                ${M(this.state.product)}
+          ${this.state.loading?V():` <!-- 브레드크럼 -->
+                ${I(this.state.product)}
 
                 <!-- 상품 상세 정보 -->
                 <div class="bg-white rounded-lg shadow-sm mb-6">
-                  ${I(this.state.product)}
+                  ${B(this.state.product)}
 
                   <!-- 수량 선택 및 액션 -->
                   <div class="border-t border-gray-200 p-4">
@@ -356,7 +361,7 @@
                           id="quantity-decrease"
                           class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-l-md bg-gray-50 hover:bg-gray-100"
                         >
-                          ${k()}
+                          ${N()}
                         </button>
                         <input
                           type="number"
@@ -370,7 +375,7 @@
                           id="quantity-increase"
                           class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-r-md bg-gray-50 hover:bg-gray-100"
                         >
-                          ${A()}
+                          ${P()}
                         </button>
                       </div>
                     </div>
@@ -406,6 +411,7 @@
                     <div class="grid grid-cols-2 gap-3 responsive-grid">
                       <div
                         class="bg-gray-50 rounded-lg p-3 related-product-card cursor-pointer"
+                        data-route="/product/86940857379"
                         data-product-id="86940857379"
                       >
                         <div class="aspect-square bg-white rounded-md overflow-hidden mb-2">
@@ -423,6 +429,7 @@
                       </div>
                       <div
                         class="bg-gray-50 rounded-lg p-3 related-product-card cursor-pointer"
+                        data-route="/product/82094468339"
                         data-product-id="82094468339"
                       >
                         <div class="aspect-square bg-white rounded-md overflow-hidden mb-2">
@@ -445,4 +452,4 @@
 
         ${y()}
       </div>
-    `}};const z=()=>r(async()=>{let{worker:e,workerOptions:t}=await import(`./browser-D8FlMt87.js`);return{worker:e,workerOptions:t}},[]).then(({worker:e,workerOptions:t})=>e.start(t));var B=class{constructor(){this.router=new s(`#root`),this.init()}init(){this.router.register(`/`,D),this.router.register(`/product/:productId`,R),this.router.register(`*`,d),this.router.start()}};function V(){document.readyState===`loading`?document.addEventListener(`DOMContentLoaded`,()=>new B):new B}z().then(V);
+    `}};const U=()=>r(async()=>{let{worker:e,workerOptions:t}=await import(`./browser-D8FlMt87.js`);return{worker:e,workerOptions:t}},[]).then(({worker:e,workerOptions:t})=>e.start(t));var W=class{constructor(){this.router=new s(`#root`),this.init()}init(){this.router.register(`/`,j),this.router.register(`/product/:productId`,H),this.router.register(`*`,d),this.router.start()}};function G(){document.readyState===`loading`?document.addEventListener(`DOMContentLoaded`,()=>new W):new W}U().then(G);
