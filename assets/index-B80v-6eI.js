@@ -451,4 +451,4 @@
 
         ${g()}
       </div>
-    `}};const I=()=>r(async()=>{let{worker:e,workerOptions:t}=await import(`./browser-DvH8zzVn.js`);return{worker:e,workerOptions:t}},[]).then(({worker:e,workerOptions:t})=>e.start(t));var L=class{constructor(){this.router=new s(`#root`),this.init()}init(){this.router.register(`/`,w),this.router.register(`/product/:productId`,F),this.router.register(`*`,c),this.router.start()}};function R(){document.readyState===`loading`?document.addEventListener(`DOMContentLoaded`,()=>new L):new L}I().then(R);
+    `}};const I=()=>r(async()=>{let{worker:e,workerOptions:t}=await import(`./browser-DvH8zzVn.js`);return{worker:e,workerOptions:t}},[]).then(({worker:e,workerOptions:t})=>e.start(t));var L=class{constructor(){this.baseUrl=`/front_6th_chapter1-1/`,this.router=new s(`#root`),this.init()}init(){this.router.register(`${this.baseUrl}`,w),this.router.register(`${this.baseUrl}product/:productId`,F),this.router.register(`*`,c),this.router.start()}};function R(){document.readyState===`loading`?document.addEventListener(`DOMContentLoaded`,()=>new L):new L}I().then(R);
